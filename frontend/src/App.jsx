@@ -9,7 +9,8 @@ function App() {
 
   const fetchTasks = async () => {
     const res = await axios.get(API);
-    setTasks(res.data);
+    const { tasks } = res.data;
+    setTasks(tasks);
   };
 
   const addTask = async () => {
@@ -28,6 +29,8 @@ function App() {
     fetchTasks();
   }, []);
 
+  console.log(tasks, 'tttt')
+
   return (
     <div style={{ padding: '20px' }}>
       <h1>To-Do List with Devops DB Test</h1>
@@ -38,7 +41,7 @@ function App() {
       />
       <button onClick={addTask}>Add</button>
       <ul>
-        {tasks.map(task => (
+        {tasks?.length > 0 && tasks.map(task => (
           <li key={task._id}>
             {task.text}
             <button onClick={() => deleteTask(task._id)}>❌</button>
